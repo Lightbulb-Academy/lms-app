@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import AppLayout from "./AppLayout";
 import Books from "./pages/books/Books";
 import AddBooks from "./pages/books/AddBooks";
+import { AuthContext } from "./context/AuthContext";
+import { useContext } from "react";
 
 // default export
 export default function App() {
@@ -15,8 +17,10 @@ export default function App() {
 }
 
 const ProtectedRoute = () => {
-  const token = localStorage.getItem("token");
-  return token ? <AppLayout /> : <Navigate to="login" />;
+  const { token } = useContext(AuthContext);
+  console.log({token});
+  const tokenn = localStorage.getItem("token");
+  return tokenn ? <AppLayout /> : <Navigate to="login" />;
 }
 
 function AppRoutes() {

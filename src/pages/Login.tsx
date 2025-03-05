@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import { NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
   // useState is a react hook to store state values
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();  // initialize navigate hook
+  const { handleLogin } = useContext(AuthContext);  // initialize AuthContext
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ export default function Login() {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      localStorage.setItem("token", data.token);
+      handleLogin(data.token);
       console.log(data);
       navigate("/");
     } catch (error) {
